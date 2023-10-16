@@ -1,7 +1,52 @@
-import myFunctions from "./sample-functions";
+import Portfolio from './portfolio'
 
-test("Testing mySum -- success", () => {
-  const expected = 30;
-  const result = myFunctions.mySum(12, 18);
-  expect(expected).toBe(result);
-});
+let portfolio;
+beforeEach(() => portfolio = new Portfolio())
+
+/* Removed, as this behavior is tested by the beforeEach
+test('Testing Portfolio constructor', () => {
+  
+})
+*/
+
+test('Testing Portfolio isEmpty', () => {
+  expect(portfolio.isEmpty()).toBeTruthy()
+
+  portfolio.addStock('AMZN')
+
+  expect(portfolio.isEmpty()).toBeFalsy()
+})
+
+test('Testing Portfolio symbolCount', () => {
+  expect(portfolio.symbolCount()).toBe(0)
+
+  portfolio.addStock('AMZN', 12)
+
+  expect(portfolio.symbolCount()).toBe(1)
+
+  portfolio.addStock('RBLX', 0)
+
+  expect(portfolio.symbolCount()).toBe(1)
+
+  portfolio.addStock('AAPL', 1)
+
+  expect(portfolio.symbolCount()).toBe(2)
+})
+
+test('Testing Portfolio symbol selling', () => {
+  portfolio.addStock('AMZN', 50)
+
+  expect(portfolio.symbolCount()).toBe(1)
+
+  portfolio.removeStock('AMZN', 50)
+
+  expect(portfolio.symbolCount()).toBe(0)
+})
+
+test('Testing Portfolio share by symbol count getting', () => {
+  expect(portfolio.shareCount('AMZN')).toBe(0)
+
+  portfolio.addStock('AMZN')
+
+  expect(portfolio.shareCount('AMZN')).toBe(1)
+})
