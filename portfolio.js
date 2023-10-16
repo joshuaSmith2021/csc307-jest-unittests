@@ -1,3 +1,5 @@
+import ShareSaleException from "./shareSaleException"
+
 class Portfolio {
   constructor() {
     this.sharesBySymbol = {}
@@ -18,6 +20,10 @@ class Portfolio {
    */
   removeStock(symbol, quantity = 1) {
     const currentCount = this.sharesBySymbol[symbol] || 0
+
+    if (quantity > currentCount)
+      throw new ShareSaleException()
+
     this.sharesBySymbol[symbol] = currentCount - quantity
   }
 

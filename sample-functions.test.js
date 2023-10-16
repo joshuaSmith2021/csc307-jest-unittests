@@ -1,4 +1,5 @@
 import Portfolio from './portfolio'
+import ShareSaleException from './shareSaleException'
 
 let portfolio;
 beforeEach(() => portfolio = new Portfolio())
@@ -49,4 +50,12 @@ test('Testing Portfolio share by symbol count getting', () => {
   portfolio.addStock('AMZN')
 
   expect(portfolio.shareCount('AMZN')).toBe(1)
+})
+
+test('Testing ShareSaleException on illegal sell', () => {
+  portfolio.addStock('AMZN', 1)
+
+  portfolio.removeStock('AMZN')
+
+  expect(() => portfolio.removeStock('AMZN')).toThrow(ShareSaleException)
 })
